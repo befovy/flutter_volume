@@ -1,6 +1,6 @@
 # flutter_volume
 
-A new flutter plugin project.
+A flutter plugin for volume control and monitoring, support iOS and Android
 
 ## Getting Started
 
