@@ -67,23 +67,18 @@ class FlutterVolume {
 
   static StreamSubscription _eventSubs;
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
-  void enableWatcher() {
+  static void enableWatcher() async {
     if (_eventSubs == null) {
+      await _channel.invokeMethod("enable_watch");
       _eventSubs = EventChannel('com.befovy.flutter_volume/event')
           .receiveBroadcastStream()
           .listen(_eventListener, onError: _errorListener);
-      _channel.invokeMethod("enable_watch");
     }
   }
 
-  void disableWatcher() {
-    _channel.invokeMethod("disable_watch");
+  static void disableWatcher() async {
     _eventSubs?.cancel();
+    await _channel.invokeMethod("disable_watch");
     _eventSubs = null;
   }
 
@@ -176,6 +171,7 @@ class _VolumeWatcherState extends State<VolumeWatcher> {
   @override
   void initState() {
     super.initState();
+    FlutterVolume.enableWatcher();
     FlutterVolume.addVolListener(_volListener);
   }
 
