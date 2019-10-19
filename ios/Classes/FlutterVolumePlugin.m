@@ -89,10 +89,10 @@
   } else if ([@"get" isEqualToString:call.method]) {
     result(@([self getVolume]));
   } else if ([@"enable_watch" isEqualToString:call.method]) {
-    [self enabe_watch];
+    [self enableWatch];
     result(nil);
   } else if ([@"disable_watch" isEqualToString:call.method]) {
-    [self disable_watch];
+    [self disableWatch];
     result(nil);
   }
 }
@@ -140,11 +140,10 @@
   }
   [_volumeViewSlider setValue:vol animated:FALSE];
   vol = _volumeViewSlider.value;
-  [self sendVolumeChange:vol];
   return vol;
 }
 
-- (void)enabe_watch {
+- (void)enableWatch {
   if (_eventListening == NO) {
     _eventListening = YES;
 
@@ -161,7 +160,7 @@
   }
 }
 
-- (void)disable_watch {
+- (void)disableWatch {
   if (_eventListening == YES) {
     _eventListening = NO;
 
@@ -188,7 +187,7 @@
 - (void)sendVolumeChange:(float)value {
   if (_eventListening) {
       NSLog(@"valume val %f\n", value);
-    [_eventSink success:@{@"event" : @"volume", @"vol" : @(value)}];
+    [_eventSink success:@{@"event" : @"vol", @"v" : @(value)}];
   }
 }
 
