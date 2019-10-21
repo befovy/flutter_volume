@@ -35,6 +35,7 @@
   UISlider *_volumeViewSlider;
   BOOL _volumeInWindow;
   BOOL _eventListening;
+  BOOL _enable_ui;
   float _volStep;
 }
 
@@ -55,6 +56,7 @@
     _registrar = registrar;
     _eventListening = FALSE;
     _volStep = 1.0 / 16.0;
+    _enable_ui = TRUE;
     _eventSink = [[QueuingEventSink alloc] init];
   }
   return self;
@@ -93,6 +95,18 @@
     result(nil);
   } else if ([@"disable_watch" isEqualToString:call.method]) {
     [self disableWatch];
+    result(nil);
+  } else if ([@"enable_ui" isEqualToString:call.method]) {
+    if (_volumeView != nil)
+      _volumeView.hidden = TRUE;
+    else
+      NSLog(@"enable ui failed, null volume view");
+    result(nil);
+  } else if ([@"disable_ui" isEqualToString:call.method]) {
+    if (_volumeView != nil)
+      _volumeView.hidden = FALSE;
+    else
+      NSLog(@"enable ui failed, null volume view");
     result(nil);
   }
 }
@@ -186,8 +200,8 @@
 
 - (void)sendVolumeChange:(float)value {
   if (_eventListening) {
-      NSLog(@"valume val %f\n", value);
-    [_eventSink success:@{@"event" : @"vol", @"v" : @(value)}];
+    NSLog(@"valume val %f\n", value);
+    [_eventSink success:@{@"event" : @"vol", @"v" : @(value), @"t": @(3)}];
   }
 }
 

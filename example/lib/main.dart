@@ -93,6 +93,16 @@ class _MyAppState extends State<MyApp> {
                       FlutterVolume.disableWatcher();
                     },
                     child: Text("disable watch")),
+                FlatButton(
+                    onPressed: () {
+                      FlutterVolume.enableUI();
+                    },
+                    child: Text("enable OS UI")),
+                FlatButton(
+                    onPressed: () {
+                      FlutterVolume.disableUI();
+                    },
+                    child: Text("disable OS UI")),
               ],
             ),
           ),

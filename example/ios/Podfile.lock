@@ -4,18 +4,18 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - flutter_volume (from `.symlinks/plugins/flutter_volume/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   flutter_volume:
     :path: ".symlinks/plugins/flutter_volume/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_volume: aa0d41571cc6fe489683135cc99aee8ebc45e289
+  flutter_volume: 2d2d5e6cf35380220487f7de3c173a70e7743867
 
 PODFILE CHECKSUM: 10ae9c18d12c9ffc2275c9a159a3b1e281990db0
 

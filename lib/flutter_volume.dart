@@ -82,6 +82,14 @@ class FlutterVolume {
     _eventSubs = null;
   }
 
+  static Future<void> enableUI() {
+    return _channel.invokeMethod("enable_ui");
+  }
+
+  static Future<void> disableUI() {
+    return _channel.invokeMethod("disable_ui");
+  }
+
   static void _eventListener(dynamic event) {
     final Map<dynamic, dynamic> map = event;
     switch (map['event']) {
