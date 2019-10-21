@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
+import android.view.KeyEvent
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -15,8 +16,16 @@ import java.lang.ref.WeakReference
 import kotlin.math.max
 import kotlin.math.min
 
-class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
+interface VolumeKeyListener {
+    fun onVolumeKeyDown(keyCode: Int, event: KeyEvent): Boolean
+}
 
+interface CanListenVolumeKey {
+    fun setVolumeKeyListener(listener: VolumeKeyListener?)
+}
+
+
+class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler, VolumeKeyListener {
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
@@ -25,6 +34,7 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
             plugin = FlutterVolumePlugin(registrar)
             channel.setMethodCallHandler(plugin)
         }
+
         private const val VOLUME_CHANGED_ACTION = "android.media.VOLUME_CHANGED_ACTION"
 
         private lateinit var plugin: FlutterVolumePlugin
@@ -34,7 +44,9 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
     private val mEventSink = QueuingEventSink()
     private var mEventChannel: EventChannel? = null
     private var mWatching: Boolean = false
+    private var mEnableUI: Boolean = true
     private var mVolumeReceiver: VolumeReceiver? = null
+
 
     private var volStep = 1.0f / 16.0f
 
@@ -88,6 +100,14 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
                 disableWatch()
                 result.success(null)
             }
+            "enable_ui" -> {
+                mEnableUI = true
+                result.success(null)
+            }
+            "disable_ui" -> {
+                mEnableUI = false
+                result.success(null)
+            }
             else -> result.notImplemented()
         }
     }
@@ -99,7 +119,7 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
 
     private val flag: Int
         get() {
-            return AudioManager.FLAG_SHOW_UI
+            return if (mEnableUI) AudioManager.FLAG_SHOW_UI else 0
         }
 
     fun getVolume(type: Int = AudioManager.STREAM_MUSIC): Float {
@@ -140,6 +160,10 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
                 }
             })
 
+            val activity = mRegistrar.activity()
+            if (activity is CanListenVolumeKey) {
+                activity.setVolumeKeyListener(this)
+            }
             mVolumeReceiver = VolumeReceiver(this)
             val filter = IntentFilter()
             filter.addAction(VOLUME_CHANGED_ACTION)
@@ -154,6 +178,11 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
             mEventChannel!!.setStreamHandler(null)
             mEventChannel = null
 
+            val activity = mRegistrar.activity()
+            if (activity is CanListenVolumeKey) {
+                activity.setVolumeKeyListener(null)
+            }
+
             mRegistrar.activeContext().unregisterReceiver(mVolumeReceiver)
             mVolumeReceiver = null
         }
@@ -163,6 +192,14 @@ class FlutterVolumePlugin(registrar: Registrar) : MethodCallHandler {
         mEventSink.success(event)
     }
 
+    override fun onVolumeKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_MUTE -> setVolume(0.0f)
+            KeyEvent.KEYCODE_VOLUME_UP -> volumeUp(minStep)
+            KeyEvent.KEYCODE_VOLUME_DOWN -> volumeUp(-minStep)
+        }
+        return true
+    }
 }
 
 
