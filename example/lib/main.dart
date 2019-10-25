@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_volume/flutter_volume.dart';
+import 'package:sys_volume/flutter_volume.dart';
 
 void main() => runApp(MyApp());
 

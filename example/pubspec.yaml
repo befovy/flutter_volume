@@ -1,5 +1,5 @@
 name: flutter_volume_example
-description: Demonstrates how to use the flutter_volume plugin.
+description: Demonstrates how to use the sys_volume plugin.
 publish_to: 'none'
 
 environment:
@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_volume:
+  sys_volume:
     path: ../
 
 # For information on the generic Dart part of this file, see the

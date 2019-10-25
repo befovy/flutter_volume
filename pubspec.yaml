@@ -1,6 +1,6 @@
-name: flutter_volume
+name: sys_volume
 description: A Plugin for Volume Control and Monitoring, support iOS and Android
-version: 0.0.1
+version: 0.1.0
 author: befovy
 homepage: blog.befovy.com
 
