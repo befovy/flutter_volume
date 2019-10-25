@@ -2,7 +2,7 @@ name: sys_volume
 description: A Plugin for Volume Control and Monitoring, support iOS and Android
 version: 0.1.0
 author: befovy
-homepage: blog.befovy.com
+homepage: https://blog.befovy.com
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
