@@ -1,22 +1,22 @@
 PODS:
   - Flutter (1.0.0)
-  - sys_volume (0.0.1):
+  - sys_volume (0.1.0):
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - sys_volume (from `.symlinks/plugins/sys_volume/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   sys_volume:
     :path: ".symlinks/plugins/sys_volume/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  sys_volume: 7d44f1df2af2c94c29e4fe7cffb7905fb00ff522
+  sys_volume: 76971cb39ff96966c3cf801a9ab765dea0048d38
 
-PODFILE CHECKSUM: 10ae9c18d12c9ffc2275c9a159a3b1e281990db0
+PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.9.3

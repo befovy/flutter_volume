@@ -121,6 +121,7 @@
     for (UIView *view in [_volumeView subviews]) {
       if ([view.class.description isEqualToString:@"MPVolumeSlider"]) {
         _volumeViewSlider = (UISlider *)view;
+        _volumeViewSlider.value = [AVAudioSession sharedInstance].outputVolume;
         break;
       }
     }
@@ -200,7 +201,7 @@
 
 - (void)sendVolumeChange:(float)value {
   if (_eventListening) {
-    NSLog(@"valume val %f\n", value);
+    NSLog(@"volume val %f\n", value);
     [_eventSink success:@{@"event" : @"vol", @"v" : @(value), @"t": @(3)}];
   }
 }

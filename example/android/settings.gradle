@@ -1,3 +1,5 @@
+rootProject.name = 'flutter_volume'
+
 include ':app'
 
 def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
