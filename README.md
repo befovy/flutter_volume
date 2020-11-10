@@ -1,5 +1,9 @@
 # flutter_volume
 
+usage, add the following line to your pubspec.yaml dependencies:
+
+    sys_volume: ^0.1.0
+
 A flutter plugin for volume control and monitoring, support iOS and Android
 
 手把手带你写 Flutter 系统音量插件
