@@ -25,3 +25,10 @@ buildscript {
     }
 }
 ```
+
+## Declaration
+
+This repo is created for example about how to create a flutter plugin.
+
+I don't want this repo to be used in productive environment.  
+If someone want use this as a volume plugin, please fork and make your own publish.
